@@ -1,4 +1,4 @@
-const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDkxNzgwNzI4MGNkNjhiMmRjOWE3YzQ4ZDVhYWZlYyIsIm5iZiI6MTczOTM4NjM5NS4zODUsInN1YiI6IjY3YWNlZTFiNTMzNTNmOWJiYTM2ZDY1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2pJJ-jWNv8sBkSuKWP5qcGX3T8lCh1e6D9A4aztzomY';
+const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const headers = {
