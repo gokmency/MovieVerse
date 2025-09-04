@@ -293,10 +293,11 @@ export default function SmashOrPass({ onBack, onGeekInfo }: SmashOrPassProps) {
               </div>
             </div>
 
-            <div className="flex items-center justify-center space-x-6 mt-4 flex-shrink-0">
+            <div className="flex items-center justify-around w-full mt-4 flex-shrink-0">
               <button onClick={handlePass} className="group bg-black hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border-2 border-white/20">
                 <X className="w-7 h-7 group-hover:rotate-12 transition-transform" />
               </button>
+              <span className="text-xs text-white/60">Movie {currentIndex + 1} of {movies.length}</span>
               <button onClick={handleSmash} className="group bg-white hover:bg-white/90 text-black p-4 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <Heart className="w-8 h-8 group-hover:scale-125 transition-transform" />
               </button>
@@ -305,10 +306,6 @@ export default function SmashOrPass({ onBack, onGeekInfo }: SmashOrPassProps) {
         ) : (
           <div className="text-center text-white/70">No more movies to show. Try changing filters.</div>
         )}
-      </div>
-      
-      <div className="text-center pb-2 flex-shrink-0">
-        <span className="text-xs text-white/60">Movie {currentIndex + 1} of {movies.length}</span>
       </div>
     </div>
   );
