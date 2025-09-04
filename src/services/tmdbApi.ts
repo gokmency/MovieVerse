@@ -28,7 +28,7 @@ export const tmdbApi = {
   },
 
   async getDiscoverMovies(filters: { genre?: string; year?: number; rating?: number, page?: number, language?: string, originalLanguage?: string, releaseDateGte?: string, releaseDateLte?: string } = {}) {
-    let url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${filters.language || 'en-US'}`;
+    let url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${filters.language || 'en-US'}&_=${Date.now()}`;
     
     if (filters.genre) url += `&with_genres=${filters.genre}`;
     if (filters.year) url += `&primary_release_year=${filters.year}`;
