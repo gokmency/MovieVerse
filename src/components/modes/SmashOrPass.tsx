@@ -203,147 +203,112 @@ export default function SmashOrPass({ onBack, onGeekInfo }: SmashOrPassProps) {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
-      {/* Navigation */}
-      <div className="flex items-center justify-between p-4">
-        <button
-          onClick={onBack}
-          className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back</span>
-        </button>
-        
-        <div className="flex items-center space-x-4">
+    <div className="h-screen bg-black flex flex-col overflow-hidden">
+      {/* Navigation & Filters */}
+      <div className="p-4 space-y-4">
+        <div className="flex items-center justify-between">
           <button
-            onClick={() => setShowSmashList(true)}
-            className="flex items-center space-x-2 bg-white hover:bg-white/90 text-black px-4 py-2 rounded-xl transition-colors font-medium"
+            onClick={onBack}
+            className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors"
           >
-            <List className="w-4 h-4" />
-            <span>Smash List ({smashList.length})</span>
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back</span>
           </button>
-          
-          <button
-            onClick={() => loadMovies(true)}
-            className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl transition-colors border border-white/20"
-          >
-            <RotateCcw className="w-4 h-4" />
-            <span className="hidden sm:inline">New Movies</span>
-          </button>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setShowSmashList(true)}
+              className="flex items-center space-x-2 bg-white hover:bg-white/90 text-black px-4 py-2 rounded-xl transition-colors font-medium"
+            >
+              <List className="w-4 h-4" />
+              <span>Smash List ({smashList.length})</span>
+            </button>
+            <button
+              onClick={() => loadMovies(true)}
+              className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl transition-colors border border-white/20"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span className="hidden sm:inline">New Movies</span>
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <div className="bg-gray-800/50 backdrop-blur-sm p-1.5 rounded-xl flex items-center gap-2 border border-white/10 text-xs">
+            <div className="flex items-center bg-black/20 p-1 rounded-lg">
+              <button onClick={() => setDiscoveryMode('discover')} className={`px-2 py-1 rounded-md ${discoveryMode === 'discover' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Discover</button>
+              <button onClick={() => setDiscoveryMode('trending')} className={`px-2 py-1 rounded-md ${discoveryMode === 'trending' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Popular</button>
+            </div>
+            <div className="flex items-center bg-black/20 p-1 rounded-lg">
+              <button onClick={() => setLanguageOption('any')} className={`px-2 py-1 rounded-md ${languageOption === 'any' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Any</button>
+              <button onClick={() => setLanguageOption('tr')} className={`px-2 py-1 rounded-md ${languageOption === 'tr' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>TR</button>
+              <button onClick={() => setLanguageOption('foreign')} className={`px-2 py-1 rounded-md ${languageOption === 'foreign' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Other</button>
+            </div>
+            {discoveryMode === 'discover' && (
+              <>
+                <div className="bg-black/20 rounded-lg">
+                  <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)} className="bg-transparent text-white border-0 focus:ring-0 text-xs py-1.5 pl-2 pr-6">
+                    <option value="">All Genres</option>
+                    {genres.map(genre => <option key={genre.id} value={genre.id}>{genre.name}</option>)}
+                  </select>
+                </div>
+                <div className="bg-black/20 rounded-lg">
+                  <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="bg-transparent text-white border-0 focus:ring-0 text-xs py-1.5 pl-2 pr-6">
+                    <option value="">Any Year</option>
+                    {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => <option key={year} value={year}>{year}</option>)}
+                  </select>
+                </div>
+              </>
+            )}
+            <button onClick={() => loadMovies(true)} className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-3 py-1.5 rounded-lg transition-colors">
+              Search
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="p-4 flex justify-center">
-        <div className="bg-gray-800/50 backdrop-blur-sm p-2 rounded-xl flex items-center gap-4 border border-white/10">
-          <div className="flex items-center bg-black/20 p-1 rounded-lg">
-            <button onClick={() => setDiscoveryMode('discover')} className={`px-3 py-1 text-sm rounded-md ${discoveryMode === 'discover' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Discover</button>
-            <button onClick={() => setDiscoveryMode('trending')} className={`px-3 py-1 text-sm rounded-md ${discoveryMode === 'trending' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Popular</button>
-          </div>
-          <div className="flex items-center bg-black/20 p-1 rounded-lg">
-            <button onClick={() => setLanguageOption('any')} className={`px-3 py-1 text-sm rounded-md ${languageOption === 'any' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Any</button>
-            <button onClick={() => setLanguageOption('tr')} className={`px-3 py-1 text-sm rounded-md ${languageOption === 'tr' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Turkish</button>
-            <button onClick={() => setLanguageOption('foreign')} className={`px-3 py-1 text-sm rounded-md ${languageOption === 'foreign' ? 'bg-cyan-500 text-black' : 'text-white/70'}`}>Foreign</button>
-          </div>
-          {discoveryMode === 'discover' && (
-            <>
-              <div className="bg-black/20 p-1 rounded-lg">
-                <select 
-                  id="genre"
-                  value={selectedGenre}
-                  onChange={(e) => setSelectedGenre(e.target.value)}
-                  className="bg-transparent text-white border-0 focus:ring-0 text-sm"
-                >
-                  <option value="">All Genres</option>
-                  {genres.map(genre => (
-                    <option key={genre.id} value={genre.id}>{genre.name}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="bg-black/20 p-1 rounded-lg">
-                <select 
-                  id="year"
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="bg-transparent text-white border-0 focus:ring-0 text-sm"
-                >
-                  <option value="">Any Year</option>
-                  {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-              </div>
-            </>
-          )}
-          <div className="w-px h-6 bg-white/10"></div>
-          <button 
-            onClick={() => loadMovies(true)}
-            className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-4 py-2 rounded-lg transition-colors"
-          >
-            Search
-          </button>
-        </div>
-      </div>
-
-      {/* Movie Card */}
-      <div className="flex-1 flex items-center justify-center p-4">
-        {currentMovie && (
-          <div className="relative max-w-sm w-full">
-            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300">
+      {/* Movie Card & Actions */}
+      <div className="flex-1 flex flex-col items-center justify-center p-4 pt-0">
+        {currentMovie ? (
+          <div className="w-full max-w-xs h-full flex flex-col justify-center">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl flex-shrink min-h-0">
               <div className="relative">
                 <img
-                  src={tmdbApi.getPosterUrl(currentMovie.poster_path, 'w780')}
+                  src={tmdbApi.getPosterUrl(currentMovie.poster_path, 'w500')}
                   alt={currentMovie.title}
-                  className="w-full h-96 object-cover"
+                  className="w-full h-auto object-cover"
+                  style={{ maxHeight: 'calc(100vh - 420px)' }}
                 />
-                <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                <div className="absolute top-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-0.5 rounded-full">
                   <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <span className="text-white text-sm font-semibold">{currentMovie.vote_average.toFixed(1)}</span>
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span className="text-white text-xs font-semibold">{currentMovie.vote_average.toFixed(1)}</span>
                   </div>
                 </div>
               </div>
-              
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-black mb-2">{currentMovie.title}</h2>
-                
-                <div className="flex items-center space-x-2 mb-4">
-                  <Calendar className="w-4 h-4 text-black/60" />
-                  <span className="text-black/60 text-sm">
-                    {new Date(currentMovie.release_date).getFullYear()}
-                  </span>
+              <div className="p-3">
+                <h2 className="text-lg font-bold text-black truncate">{currentMovie.title}</h2>
+                <div className="flex items-center space-x-2 text-black/60 text-xs">
+                  <Calendar className="w-3 h-3" />
+                  <span>{new Date(currentMovie.release_date).getFullYear()}</span>
                 </div>
-                
-                <p className="text-black/70 text-sm leading-relaxed line-clamp-3">
-                  {currentMovie.overview}
-                </p>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center justify-center space-x-8 mt-8">
-              <button
-                onClick={handlePass}
-                className="group bg-black hover:bg-black/80 text-white p-4 rounded-full transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
-              >
-                <X className="w-8 h-8 group-hover:rotate-12 transition-transform" />
+            <div className="flex items-center justify-center space-x-6 mt-4 flex-shrink-0">
+              <button onClick={handlePass} className="group bg-black hover:bg-black/80 text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border-2 border-white/20">
+                <X className="w-7 h-7 group-hover:rotate-12 transition-transform" />
               </button>
-              
-              <button
-                onClick={handleSmash}
-                className="group bg-white hover:bg-white/90 text-black p-4 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg"
-              >
+              <button onClick={handleSmash} className="group bg-white hover:bg-white/90 text-black p-4 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <Heart className="w-8 h-8 group-hover:scale-125 transition-transform" />
               </button>
             </div>
           </div>
+        ) : (
+          <div className="text-center text-white/70">No more movies to show. Try changing filters.</div>
         )}
       </div>
-
-      <div className="text-center p-4">
-        <div className="flex items-center justify-center space-x-2 text-gray-400">
-          <span className="text-sm text-white/60">Movie {currentIndex + 1} of {movies.length}</span>
-        </div>
+      
+      <div className="text-center pb-2 flex-shrink-0">
+        <span className="text-xs text-white/60">Movie {currentIndex + 1} of {movies.length}</span>
       </div>
     </div>
   );
