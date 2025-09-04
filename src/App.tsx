@@ -32,7 +32,7 @@ function App() {
     <div className="min-h-screen bg-black flex flex-col relative">
       <Header onLogoClick={navigateHome} />
       
-      <main className="flex-1">
+      <main className={`flex-1 ${currentMode !== 'landing' ? 'pt-20' : ''}`}>
         {currentMode === 'landing' && (
           <LandingPage onModeSelect={navigateToMode} />
         )}
