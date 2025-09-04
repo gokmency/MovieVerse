@@ -1,4 +1,3 @@
-import React from 'react';
 import { Heart, Gamepad2, Info } from 'lucide-react';
 
 interface LandingPageProps {
@@ -22,7 +21,7 @@ export default function LandingPage({ onModeSelect }: LandingPageProps) {
             playsInline
             className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700"
           >
-            <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+            <source src="/video31.mp4" type="video/mp4" />
           </video>
         </div>
         
@@ -67,7 +66,7 @@ export default function LandingPage({ onModeSelect }: LandingPageProps) {
             playsInline
             className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700"
           >
-            <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+            <source src="/video32.mp4" type="video/mp4" />
           </video>
         </div>
         
@@ -113,7 +112,7 @@ export default function LandingPage({ onModeSelect }: LandingPageProps) {
             playsInline
             className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700"
           >
-            <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+            <source src="/video33.mp4" type="video/mp4" />
           </video>
         </div>
         

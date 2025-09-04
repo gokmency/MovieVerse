@@ -1,4 +1,3 @@
-const API_KEY = '9d917807280cd68b2dc9a7c48d5aafec';
 const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDkxNzgwNzI4MGNkNjhiMmRjOWE3YzQ4ZDVhYWZlYyIsIm5iZiI6MTczOTM4NjM5NS4zODUsInN1YiI6IjY3YWNlZTFiNTMzNTNmOWJiYTM2ZDY1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2pJJ-jWNv8sBkSuKWP5qcGX3T8lCh1e6D9A4aztzomY';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -13,8 +12,8 @@ export const tmdbApi = {
     return response.json();
   },
 
-  async getTrendingMovies() {
-    const response = await fetch(`${BASE_URL}/trending/movie/week`, { headers });
+  async getTrendingMovies(language: string = 'en-US') {
+    const response = await fetch(`${BASE_URL}/trending/movie/week?language=${language}`, { headers });
     return response.json();
   },
 
@@ -28,14 +27,23 @@ export const tmdbApi = {
     return response.json();
   },
 
-  async getDiscoverMovies(filters: { genre?: string; year?: number; rating?: number } = {}) {
-    let url = `${BASE_URL}/discover/movie?sort_by=popularity.desc`;
+  async getDiscoverMovies(filters: { genre?: string; year?: number; rating?: number, page?: number, language?: string, originalLanguage?: string, releaseDateGte?: string, releaseDateLte?: string } = {}) {
+    let url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${filters.language || 'en-US'}`;
     
     if (filters.genre) url += `&with_genres=${filters.genre}`;
-    if (filters.year) url += `&year=${filters.year}`;
+    if (filters.year) url += `&primary_release_year=${filters.year}`;
     if (filters.rating) url += `&vote_average.gte=${filters.rating}`;
-    
+    if (filters.page) url += `&page=${filters.page}`;
+    if (filters.originalLanguage) url += `&with_original_language=${filters.originalLanguage}`;
+    if (filters.releaseDateGte) url += `&primary_release_date.gte=${filters.releaseDateGte}`;
+    if (filters.releaseDateLte) url += `&primary_release_date.lte=${filters.releaseDateLte}`;
+
     const response = await fetch(url, { headers });
+    return response.json();
+  },
+
+  async getMovieGenres() {
+    const response = await fetch(`${BASE_URL}/genre/movie/list`, { headers });
     return response.json();
   },
 

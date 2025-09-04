@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, Search, Star, Calendar, Clock, Heart, Users, Globe, DollarSign } from 'lucide-react';
 import { Movie, MovieDetails } from '../../types/movie';
 import { tmdbApi } from '../../services/tmdbApi';
@@ -6,9 +6,10 @@ import { storage } from '../../utils/storage';
 
 interface GeekInfoProps {
   onBack: () => void;
+  selectedMovieId?: number | null;
 }
 
-export default function GeekInfo({ onBack }: GeekInfoProps) {
+export default function GeekInfo({ onBack, selectedMovieId }: GeekInfoProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
@@ -17,7 +18,24 @@ export default function GeekInfo({ onBack }: GeekInfoProps) {
 
   useEffect(() => {
     setSmashList(storage.getSmashList());
-  }, []);
+
+    const loadMovieById = async (movieId: number) => {
+      try {
+        setLoading(true);
+        const details = await tmdbApi.getMovieDetails(movieId);
+        setSelectedMovie(details);
+        setSearchResults([]);
+      } catch (error) {
+        console.error('Failed to load movie details:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectedMovieId) {
+      loadMovieById(selectedMovieId);
+    }
+  }, [selectedMovieId]);
 
   const searchMovies = async () => {
     if (!searchQuery.trim()) return;

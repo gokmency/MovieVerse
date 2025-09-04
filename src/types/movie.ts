@@ -15,7 +15,9 @@ export interface MovieDetails extends Movie {
   budget: number;
   revenue: number;
   production_countries: { name: string }[];
-  cast?: CastMember[];
+  credits?: {
+    cast: CastMember[];
+  };
   trivia?: string[];
 }
 

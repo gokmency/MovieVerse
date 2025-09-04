@@ -30,6 +30,10 @@ export const storage = {
     return smashList.some(m => m.id === movieId);
   },
 
+  clearSmashList(): void {
+    localStorage.removeItem(SMASH_LIST_KEY);
+  },
+
   getGameScore(gameType: string) {
     const scores = localStorage.getItem(`${GAME_SCORES_KEY}_${gameType}`);
     return scores ? JSON.parse(scores) : { correct: 0, total: 0, streak: 0 };

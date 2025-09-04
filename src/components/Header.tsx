@@ -1,4 +1,3 @@
-import React from 'react';
 import { Film } from 'lucide-react';
 
 interface HeaderProps {
@@ -22,12 +21,6 @@ export default function Header({ onLogoClick }: HeaderProps) {
             </h1>
           </button>
           
-          <div className="flex items-center space-x-4">
-            <div className="hidden sm:flex items-center space-x-2 text-sm text-white/60">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              <span>Live Movie Data</span>
-            </div>
-          </div>
         </div>
       </div>
     </header>
